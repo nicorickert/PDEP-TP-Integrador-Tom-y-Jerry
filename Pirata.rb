@@ -50,6 +50,29 @@ class EspiaDeLaCorona < Pirata
 end
 
 
+class Barco
+    def initialize(capacidad,tripulantes,mision = "ninguna")
+        @mision = mision
+        @Capacidad = capacidad
+        @Tripulantes= tripulantes
+    end
+    def sosSaqueablePor(unPirata)
+        return unPirata.pasadoDeGrog
+    end
+    def esVulnerableA(otroBarco)
+        return self.cantidadTripulantes <= otroBarco.cantidadTripulantes
+    end
+    def cantidadTripulantes()
+        return @Tripulantes.length
+    end
+    def todosPasadosDeGrog()
+        return @Tripulantes.all? {|tripulante| tripulante.pasadoDeGrog}
+    end
+
+
+
+end
+
 if __FILE__ == $0
     pirata = Pirata.new(["a","s","d","f"],100,20)
     puts ("Pruebas pirata: ")
@@ -65,6 +88,13 @@ if __FILE__ == $0
     espia = EspiaDeLaCorona.new(["a","d"], "yo", 999,20)
     puts("Pruebas espia: ")
     puts(espia.pasadoDeGrog)
+    puts("Pruebas barco: ")
+    barquito = Barco.new(20,[pirata,])
+    barcote = Barco.new(20,[pirata,pirata])
+    puts(barquito.sosSaqueablePor(pirata))
+    puts(barquito.cantidadTripulantes)
+    puts(barquito.esVulnerableA(barcote))
+    puts(barcote.todosPasadosDeGrog)
     gets()
 
 end
