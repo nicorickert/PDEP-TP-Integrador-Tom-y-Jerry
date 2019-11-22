@@ -1,3 +1,20 @@
 1) Es lenguaje interpretado
-2) Las constantes se pueden pisar, pero tira warning
-3) Se pueden pasar parametros sin parentesis dejando un espacio entre el nombre del metodo y el parametro (tipo haskell)
+2) Sin tipado fuerte, y se puede ir cambiando
+3) Las constantes se pueden pisar, pero tira warning
+4) Se pueden pasar parametros sin parentesis dejando un espacio entre el nombre del metodo y el parametro (tipo haskell)
+5) Variables de clase (El mismo valor a todas las instancias @@) y variables de instancia (Especificas de cada instancia @)
+6) Alias para metodos con "alias"
+7) Rangos con .. (incluye el ultimo) ... (excluye al ultimo)
+8) No hay llaves, se terminan las sentencias multiples con "end"
+9) Hay metodos que no aplican efecto, a no ser que se ponga un '!' al final (sort, uniq, etc)
+10) Por ahora todo es un objeto, numeros, strings, arrays. Parecido a wollok
+11) Herencia solo de a 1 "class MiClase < ClasePadre"
+12) El constructor se define en el metodo initialize
+13) Hay que usar setters y getters para acceder desde afuera
+
+
+
+A) Open classes: Las clases en Ruby son abiertas, es decir, que se puede agregar funcionalidad a una clase ya existente desde otro lugar de definicion.
+	no tira error al volver a definir una clase con el mismo nombre, solo le agrega las funcionalidades nuevas.
+	pero tambien se pueden modificar metodos ya existentes. por lo que puede generar problemas
+	tambien se puede modificar clases del propio lenguaje (String, Array...)
