@@ -44,10 +44,16 @@ class Pirata
     end
 end
 
+class EspiaDeLaCorona < Pirata
+    def pasadoDeGrog
+        return false
+    end
+end
+
 
 if __FILE__ == $0
-    puts("asd")
     pirata = Pirata.new(["a","s","d","f"],"El we",100,20)
+    puts ("Pruebas pirata: ")
     a = pirata.tiene("s")
     puts(a)
     puts(pirata.cantidadItems())
@@ -57,6 +63,9 @@ if __FILE__ == $0
     puts(pirata.nivelEbriedad)
     puts(pirata.fuisteInvitadoPor("we"))
     puts(pirata.fuisteInvitadoPor("El we"))
+    espia = EspiaDeLaCorona.new(["a","d"], "yo", 999,20)
+    puts("Pruebas espia: ")
+    puts(espia.pasadoDeGrog)
     gets()
 
 end
