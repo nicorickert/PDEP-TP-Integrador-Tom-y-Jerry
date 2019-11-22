@@ -1,0 +1,3 @@
+1) Es lenguaje interpretado
+2) Las constantes se pueden pisar, pero tira warning
+3) Se pueden pasar parametros sin parentesis dejando un espacio entre el nombre del metodo y el parametro (tipo haskell)
