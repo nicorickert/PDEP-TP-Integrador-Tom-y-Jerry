@@ -38,6 +38,11 @@ class Pirata
         end
     end
 
+    def podesSaquear(unaVictima)
+        return unaVictima.sosSaqueablePor(self)
+    end
+
+
     def fuisteInvitadoPor(unTripulante)
         return unTripulante == @invitante
     end
@@ -68,13 +73,55 @@ class Barco
     def todosPasadosDeGrog()
         return @Tripulantes.all? {|tripulante| tripulante.pasadoDeGrog}
     end
-
-
+    def hayLugar
+        return self.cantidadTripulantes < @Capacidad
+    end
+    def pirataMasEbrio()
+        return @Tripulantes.max {|tripulante| tripulante.nivelEbriedad}
+    end
+    def esTemible()
+        @mision.esRealizablePor(self)
+    end
+    def tieneSuficienteTripulacion()
+        return self.cantidadTripulantes >= @Capacidad * 0.9
+    end
 
 end
 
+class CiudadCostera
+    attr_accessor :cantidadHabitantes
+    def initialize (cantidadHabitantes = 0)
+        @cantidadHabitantes = cantidadHabitantes
+    end
+    def sosSaqueablePor(unPirata)
+        return unPirata.nivelEbriedad() >= 50
+    end
+    def esVulnerableA(otroBarco)
+        otroBarco.cantidadTripulantes() >= @cantidadHabitantes *0.4 || otroBarco.todosPasadosDeGrog()
+    end
+    def sumarHabitante
+        @cantidadHabitantes += 1
+    end
+end
+
+
+class Mision
+    def esRealizablePor(unBarco)
+        return unBarco.tieneSuficienteTripulacion
+    end
+end
+
+class BusquedaDelTesoro < Mision
+    def esUtil(unPirata)
+        return self.tieneAlgunItemObligatorio(unPirata) && unPirata.cantidadMonedas() <=5
+    end
+    def tieneAlgunItemObligatorio(unPirata)
+        return ["brujula","mapa","grogXD"].any? {|item| unPirata.tiene(item)}
+    end
+end
+
 if __FILE__ == $0
-    pirata = Pirata.new(["a","s","d","f"],100,20)
+    pirata = Pirata.new(["a","s","d","mapa"],100,5)
     puts ("Pruebas pirata: ")
     a = pirata.tiene("s")
     puts(a)
@@ -95,6 +142,11 @@ if __FILE__ == $0
     puts(barquito.cantidadTripulantes)
     puts(barquito.esVulnerableA(barcote))
     puts(barcote.todosPasadosDeGrog)
+    puts(barquito.pirataMasEbrio)
+    puts ("pruebas mision: ")
+    busqueda = BusquedaDelTesoro.new()
+    puts(busqueda.esUtil(pirata))
+    puts(busqueda.esUtil(espia))
     gets()
 
 end
