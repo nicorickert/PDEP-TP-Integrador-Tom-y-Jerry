@@ -14,6 +14,7 @@ class Pirata
         @nivelEbriedad = nivelEbriedad
         @cantidadMonedas = cantidadMonedas
     end
+    
     def tiene?(unItem)
         return @items.include?(unItem)
     end
@@ -36,7 +37,6 @@ class Pirata
         @cantidadMonedas-= 1
     end
 
-
     def validarGastarMonedas()
         if(@cantidadMonedas == 0)
             raise "Monedas insuficientes"
@@ -47,6 +47,9 @@ class Pirata
         return unaVictima.sosSaqueablePor(self)
     end
 
+    def cantidadInvitadosPara(unBarco)
+        return unBarco.cantidadInvitadosPor(self)
+    end
 
     def fuisteInvitadoPor(unTripulante)
         return unTripulante == @invitante
@@ -56,6 +59,10 @@ end
 class EspiaDeLaCorona < Pirata
     def pasadoDeGrog
         return false
+    end
+
+    def podesSaquear(unaVictima) 
+        return super && self.tiene('permiso de la corona')
     end
 end
 

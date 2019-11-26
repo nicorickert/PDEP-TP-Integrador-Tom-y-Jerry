@@ -4,18 +4,23 @@ class Barco
         @Capacidad = capacidad
         @Tripulantes= tripulantes
     end
+
     def sosSaqueablePor(unPirata)
         return unPirata.pasadoDeGrog
     end
+
     def esVulnerableA(otroBarco)
         return self.cantidadTripulantes <= otroBarco.cantidadTripulantes
     end
+
     def cantidadTripulantes()
         return @Tripulantes.length
     end
+
     def todosPasadosDeGrog?()
         return @Tripulantes.all? {|tripulante| tripulante.pasadoDeGrog}
     end
+
     def puedeUnirse?(unPirata)
         return self.hayLugar? && @mision.esUtil(unPirata)
     end
@@ -30,6 +35,7 @@ class Barco
             puts("agregado")
         end
     end
+
     def mostrarTripulantes()
         @Tripulantes.each do |tripulante|
             puts (tripulante)
@@ -62,6 +68,7 @@ class Barco
     def esTemible()
         @mision.esRealizablePor(self)
     end
+
     def tieneSuficienteTripulacion()
         return self.cantidadTripulantes >= @Capacidad * 0.9
     end
@@ -70,4 +77,27 @@ class Barco
         return @Tripulantes.any? {|tripulante| tripulante.tiene?(unItem)}
     end
 
+    def tripulantesPasadosDeGrog()
+        return tripulantes.filter {|tripulante| tripulante.pasadoDeGrog()}
+    end
+
+    def cantidadTripulantesPasadosDeGrog()
+        return self.tripulantesPasadosDeGrog().size()
+    end
+
+    def cantidadItemsDistintosEntreTripulantesPasadosDeGrog()
+        return self.tripulantesPasadosDeGrog().flatMap {|tripulante| tripulante.items()}.asSet().size()
+    end
+
+    def tripulantePasadosDeGrogConMasMonedas()
+        return self.tripulantesPasadosDeGrog().max {|tripulante| tripulante.cantidadMonedas()}
+    end 
+
+    def tripulanteMasInvitador() 
+        return tripulantes.max {|tripulante| tripulante.cantidadInvitadorPara(self)}
+    end
+
+    def cantidadInvitadorPor(unTripulante)
+        return tripulantes.count {|tripulante| tripulante.fuisteInvitadoPor(unTripulante)}
+    end
 end
