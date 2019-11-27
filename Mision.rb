@@ -1,3 +1,7 @@
+require_relative 'Pirata.rb'
+require_relative 'CiudadCostera.rb'
+require_relative 'Barco.rb'
+
 class Mision
     def esRealizablePor(unBarco)
         return unBarco.tieneSuficienteTripulacion
@@ -14,33 +18,33 @@ class BusquedaDelTesoro < Mision
     end
 
     def esRealizablePor(unBarco)                            # Si no le paso parametros al super, le va a pasar todos los paramentros que reciba el metodo 
-        return super && unBarco.tiene("llave de cofre")
+        return super && unBarco.tiene?("llave de cofre")
     end
 end
 
 class ConvertirseEnLeyenda < Mision
-    def initialize(itemObligatorio)
+    def initialize(itemObligatorio:)
         @itemObligatorio = itemObligatorio
     end
 
     def esUtil(unPirata)
-        return unPirata.cantidadItems >= 10 && unPirata.tiene(itemObligatorio)
+        return unPirata.cantidadItems >= 10 && unPirata.tiene?(@itemObligatorio)
     end
 end
 
 class Saqueo < Mision
-    @@limiteMonedas = 0             # Variable de clase, es la misma para cada instancia de esta clase, y se puede cambiar directamente. No hace falta crear el objeto monedasParaSaquear
+    @@limiteMonedas = 10             # Variable de clase, es la misma para cada instancia de esta clase, y se puede cambiar directamente. No hace falta crear el objeto monedasParaSaquear
     
-    def initialize(victima)
+    def initialize(victima:)
         @victima = victima
     end
 
     def esUtil(unPirata)
-        return unPirata.cantidadMonedas < @@limiteMonedas && @victima.esVulnerableA(unPirata)
+        return unPirata.cantidadMonedas < @@limiteMonedas && @victima.sosSaqueablePor(unPirata)
     end
 
     def esRealizablePor(unBarco)
-        return super && victima.esVulnerableA(unBarco)
+        return super && @victima.esVulnerableA(unBarco)
     end
 
 end

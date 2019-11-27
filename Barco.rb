@@ -1,5 +1,9 @@
+require_relative 'Pirata.rb'
+require_relative 'Mision.rb'
+require_relative 'CiudadCostera.rb'
+
 class Barco
-    def initialize(capacidad,tripulantes,mision)
+    def initialize(capacidad: 0,tripulantes: [],mision: BusquedaDelTesoro.new)
         @mision = mision
         @Capacidad = capacidad
         @Tripulantes= tripulantes
@@ -32,7 +36,6 @@ class Barco
     def agregar(unTripulante)
         if(self.puedeUnirse?(unTripulante))
             @Tripulantes.push(unTripulante)
-            puts("agregado")
         end
     end
 
@@ -78,15 +81,15 @@ class Barco
     end
 
     def tripulantesPasadosDeGrog()
-        return tripulantes.filter {|tripulante| tripulante.pasadoDeGrog()}
+        return @Tripulantes.select {|tripulante| tripulante.pasadoDeGrog()}
     end
 
     def cantidadTripulantesPasadosDeGrog()
-        return self.tripulantesPasadosDeGrog().size()
+        return self.tripulantesPasadosDeGrog().length()
     end
 
     def cantidadItemsDistintosEntreTripulantesPasadosDeGrog()
-        return self.tripulantesPasadosDeGrog().flatMap {|tripulante| tripulante.items()}.asSet().size()
+        return self.tripulantesPasadosDeGrog().flat_map {|tripulante| tripulante.items()}.uniq.length
     end
 
     def tripulantePasadosDeGrogConMasMonedas()
@@ -94,10 +97,10 @@ class Barco
     end 
 
     def tripulanteMasInvitador() 
-        return tripulantes.max {|tripulante| tripulante.cantidadInvitadorPara(self)}
+        return @Tripulantes.max {|tripulante| tripulante.cantidadInvitadosPara(self)}
     end
 
-    def cantidadInvitadorPor(unTripulante)
-        return tripulantes.count {|tripulante| tripulante.fuisteInvitadoPor(unTripulante)}
+    def cantidadInvitadosPor(unTripulante)
+        return @Tripulantes.count {|tripulante| tripulante.fuisteInvitadoPor(unTripulante)}
     end
 end

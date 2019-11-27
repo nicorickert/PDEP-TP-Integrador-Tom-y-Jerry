@@ -1,6 +1,10 @@
+require_relative 'Pirata.rb'
+require_relative 'Mision.rb'
+require_relative 'Barco.rb'
+
 class CiudadCostera
     attr_accessor :cantidadHabitantes
-    def initialize (cantidadHabitantes = 0)
+    def initialize (cantidadHabitantes: 0)
         @cantidadHabitantes = cantidadHabitantes
     end
     def sosSaqueablePor(unPirata)

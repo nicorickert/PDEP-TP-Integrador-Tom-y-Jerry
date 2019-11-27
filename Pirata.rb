@@ -8,7 +8,7 @@ class Pirata
     attr_accessor :nivelEbriedad
     attr_accessor :cantidadMonedas
     
-    def initialize(items, invitante = "nadie", nivelEbriedad, cantidadMonedas)
+    def initialize(items: [], invitante: "nadie", nivelEbriedad: 0, cantidadMonedas: 0)  # Keyboard Arguments = Named parameters
         @items = items
         @invitante = invitante
         @nivelEbriedad = nivelEbriedad
@@ -64,37 +64,4 @@ class EspiaDeLaCorona < Pirata
     def podesSaquear(unaVictima) 
         return super && self.tiene('permiso de la corona')
     end
-end
-
-if __FILE__ == $0
-    busqueda = BusquedaDelTesoro.new()
-    pirata = Pirata.new(["a","s","d","mapa"],100,5)
-    puts ("Pruebas pirata: ")
-    a = pirata.tiene?("s")
-    puts(a)
-    puts(pirata.cantidadItems())
-    puts(pirata.pasadoDeGrog())
-    pirata.tomarGrog
-    puts(pirata.cantidadMonedas)
-    puts(pirata.nivelEbriedad)
-    puts(pirata.fuisteInvitadoPor("we"))
-    puts(pirata.fuisteInvitadoPor("nadie"))
-    espia = EspiaDeLaCorona.new(["a","d"], "yo", 999,20)
-    puts("Pruebas espia: ")
-    puts(espia.pasadoDeGrog)
-    puts("Pruebas barco: ")
-    barquito = Barco.new(20,[pirata], busqueda)
-    barcote = Barco.new(20,[pirata,pirata,espia],busqueda)
-    puts(barquito.sosSaqueablePor(pirata))
-    puts(barquito.cantidadTripulantes)
-    puts(barquito.esVulnerableA(barcote))
-    puts(barcote.todosPasadosDeGrog?())
-    puts(barcote.pirataMasEbrio)
-    barquito.agregar(pirata)
-    puts(barquito.cantidadTripulantes)
-    puts ("pruebas mision: ")
-    puts(busqueda.esUtil(pirata))
-    puts(busqueda.esUtil(espia))
-    gets()
-
 end
